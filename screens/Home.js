@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { 
   SafeAreaView,
   Text, 
@@ -10,17 +10,17 @@ import {
   FlatList,
   Animated,
 } from 'react-native';
+import { COLORS, SIZES, FONTS, icons, images, specials, popular, populars, foodList} from '../constants';
+import { CartContext } from '../context/CartContext';
+import * as Animatable from 'react-native-animatable';
 
-import { COLORS, SIZES, FONTS, icons, images, specials, popular, populars} from '../constants';
-import { color } from 'react-native-reanimated';
-import { render } from 'react-dom';
+const Home = ({ navigation }) => {
 
-
-
-const Home = () => {
-
+  
   const scrollX = new Animated.Value(0);
   const [highlights, setHighlights] = React.useState(specials);
+  const [cart, setCart] = useContext(CartContext);
+  const numItems = cart.reduce((acc, curr) => acc + curr.quantity, 0);
 
   React.useEffect(() => {
       setHighlights(specials);
@@ -35,21 +35,97 @@ const Home = () => {
           marginTop: -50,
         }}
       >
+        <View
+          style={{
+            width: 50,
+            paddingLeft: SIZES.padding *2,
+            justifyContent: 'center',
+          }}
+        >
+            
+        </View>
 
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-              <Image
-                style={{ 
-                  width: 200, 
-                  height: SIZES.largeTitle,
-                  marginTop: 50 
-                }}
-                resizeMode="contain"
-                source={images.tonysBanner}
-              />
-        </View>
+          <Image
+                      style={{ 
+                        width: 200, 
+                        height: SIZES.largeTitle,
+                        marginTop: 50
+                      }}
+                      resizeMode="contain"
+                      source={images.tonysBanner}
+                  />
+          </View>
+
+        <TouchableOpacity
+          style={{
+            width: 50,
+            //justifyContent: 'center',
+            paddingRight: SIZES.padding *2,
+            marginTop: 30,
+            justifyContent: 'center',
+          }}
+          onPress={() => navigation.navigate("Cart",{ orderItem: {} })}
+        >
+          {renderCartIcon()}
+        </TouchableOpacity>
 
       </View>
     )
+  }
+
+  function renderCartIcon() {
+    if (cart.length > 0) {
+      return (<>
+        <Image 
+              source={icons.shoppingCart}
+              resizeMode="contain"
+              style={{
+                width: 35,
+                height: 35,
+                tintColor: COLORS.darkBlue,
+              }}
+            />
+        
+
+          
+            <Animatable.View style={{
+              backgroundColor: COLORS.pink,
+              width: 20,
+              height: 20,
+              marginTop: 0,
+              borderRadius: 10,
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginTop: -43,
+              marginLeft: 20,
+            }}
+            animation='bounceIn'
+            duration={1500}
+            >
+              <Text style={{
+                color: COLORS.white,
+              }}> {numItems} </Text>
+            </Animatable.View>
+        </>
+      )
+    } else {
+
+      return (
+        <Image 
+          source={icons.shoppingCart}
+          resizeMode="contain"
+          style={{
+            width: 35,
+            height: 35,
+            tintColor: COLORS.darkBlue,
+            marginTop: 17,
+            //marginRight: 10,
+          }}
+        />
+      )
+
+    }
   }
 
   function renderDots() {

@@ -4,7 +4,8 @@ import { COLORS, SIZES, FONTS } from "./theme";
 import specials from "./specials";
 import populars from "./populars";
 import categories from './categories';
-import foodList from './foodList'
+import storeList from './storeList';
+import foodList from './foodList';
 
 export { 
     COLORS, 
@@ -15,5 +16,6 @@ export {
     specials, 
     populars, 
     categories, 
+    storeList,
     foodList,
 };

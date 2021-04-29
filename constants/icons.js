@@ -6,6 +6,8 @@ export const shoppingCart = require("../assets/icons/shoppingCart.png");
 export const tag = require("../assets/icons/tag.png");
 export const close = require("../assets/icons/close.png")
 export const arrow = require("../assets/icons/arrow.png")
+export const menu = require("../assets/icons/menuBars.png")
+export const pepper = require("../assets/icons/pepper.png")
 
 export default {
     taco,
@@ -16,4 +18,6 @@ export default {
     tag,
     close,
     arrow,
+    menu,
+    pepper,
 }

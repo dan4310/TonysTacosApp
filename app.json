@@ -17,13 +17,16 @@
       "**/*"
     ],
     "ios": {
+      "bundleIdentifier": "com.tonystacos",
       "supportsTablet": true
     },
     "android": {
+      "package": "com.tonystacos",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "versionCode": 1
     },
     "web": {
       "favicon": "./assets/favicon.png"

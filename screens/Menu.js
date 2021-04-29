@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useContext } from 'react';
 import { 
   SafeAreaView,
   Text, 
@@ -9,26 +9,149 @@ import {
   FlatList,
 } from 'react-native';
 
-import * as module1 from '../modules/module1';
 
 import { COLORS, 
   SIZES, 
   icons, 
-  images, 
-  specials,
-  popular,
-  foodList,
+  images,
   categories,
 } from '../constants';
-import { NavigationContainer } from '@react-navigation/native';
-
-var orderItem = {};
+import { CartContext } from '../context/CartContext';
+import * as Animatable from 'react-native-animatable';
+import { useEffect } from 'react';
+import firebase from '../firebase';
+import 'firebase/database';
 
 const Menu = ({ navigation }) => {
+  const [foodList, setFoodList] = React.useState([]);
 
-  const foodAction = 'add';
-  const [foods, setFoods] = React.useState(foodList);
+  const [cart, setCart] = useContext(CartContext);
+  const [foods, setFoods] = React.useState(null);
+  
+  const [foodData, setFoodData] = React.useState([]);
+  const [modData, setModData] = React.useState({});
+
+  useEffect(() => {
+   firebase.database().ref('modifiers').get()
+   .then((response) => {
+      return response
+    })
+    .then(mods => {
+      
+      firebase.database().ref('foodList/foods').get()
+        .then(response => {
+          return response
+        })
+        .then((data) => {storeInitialFoods(data.val(), {
+          redOrGreen: mods.val().redOrGreen,
+          tacoModifiers: mods.val().tacoModifiers,
+          riceOrLettuce: mods.val().riceOrLettuce,
+          bowlModifiers: mods.val().bowlModifiers,
+          nachosModifiers: mods.val().nachosModifiers,
+          pizzadillaModifiers: mods.val().pizzadillaModifiers,
+          guacSize: mods.val().guacSize,
+          smallOrLarge: mods.val().smallOrLarge,
+          sodas: mods.val().sodas,
+        })})
+        .catch((error) => console.error(error))
+     
+    })
+    .catch((error) => console.error(error))
+  }, [])
+
+  function storeInitialFoods(foodData, modData) {
+    var modsCategories = {};
+      for (var key in modData) {
+        var modList = [];
+        for (var i = 0; i < modData[key].length; i++) {
+          var tempMod = {
+            id: parseInt(modData[key][i].id),
+            name: modData[key][i].name,
+            price: parseFloat(modData[key][i].price)
+          }
+          if (modData[key][i].hasOwnProperty("desc")) {
+            tempMod = {
+              ...tempMod,
+              desc: modData[key][i].desc,
+            }
+          }
+          modList.push(tempMod)
+        }
+        modsCategories[key] = modList;
+      }
+      
+      var modifiers = modsCategories;
+      
+      
+      var foodList = []
+      for (var i = 0; i < foodData.length; i++) {
+        var foodTemp = {
+          id: parseInt(foodData[i].id),
+          name: foodData[i].name,
+          categoryID: parseInt(foodData[i].categoryID),
+          desc: foodData[i].desc,
+          price: parseFloat(foodData[i].price)
+        }
+        if (foodData[i].hasOwnProperty("modifiers")) {
+          var mods = [];
+          switch (foodData[i].modifiers) {
+            case "tacoModifiers":
+              mods = modifiers.tacoModifiers;
+              break;
+            case "pizzadillaModifiers":
+              mods = modifiers.pizzadillaModifiers;
+              break;
+            case "bowlModifiers":
+              mods = modifiers.bowlModifiers;
+              break;
+            case "nachosModifiers":
+              mods = modifiers.nachosModifiers;
+              break;
+          }
+          foodTemp = {
+            ...foodTemp,
+            modifiers: mods,
+          }
+        }
+        if (foodData[i].hasOwnProperty("choices")) {
+          var choices = [];
+          switch (foodData[i].choices) {
+            case "redOrGreen":
+              choices = modifiers.redOrGreen;
+              break;
+            case "riceOrLettuce":
+              choices = modifiers.riceOrLettuce;
+              break;
+            case "guacSize":
+              choices = modifiers.guacSize;
+              break;
+            case "smallOrLarge":
+              choices = modifiers.smallOrLarge;
+              break;
+            case "sodas":
+              choices = modifiers.sodas;
+              break;
+          }
+          foodTemp = {
+            ...foodTemp,
+            choices: choices,
+          }
+        }
+        if (foodData[i].hasOwnProperty("image")) {
+          foodTemp = {
+            ...foodTemp,
+            image: foodData[i].image
+          }
+        }
+        
+        foodList.push(foodTemp);
+      }
+      setFoods(foodList);
+      setFoodList(foodList);
+  }
+    
   const [selectedCategory, setSelectedCategory] = React.useState(null);
+  const numItems = cart.reduce((acc, curr) => acc + curr.quantity, 0);
   const foodFlatList = useRef();
 
   function renderHeader() {
@@ -37,82 +160,117 @@ const Menu = ({ navigation }) => {
           flexDirection: 'row', 
           height: 100,
           backgroundColor: COLORS.primary,
-          marginTop: -50
+          marginTop: -50,
         }}
       >
-        <TouchableOpacity
+        <View
           style={{
             width: 50,
             paddingLeft: SIZES.padding *2,
             justifyContent: 'center',
           }}
         >
-            <Image 
-              source={icons.location}
-              resizeMode="contain"
-              style={{
-                width: 30,
-                height: 30,
-                tintColor: COLORS.darkBlue,
-                marginTop: 50
-              }}
-            />
-        </TouchableOpacity>
-
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', paddingBottom: SIZES.padding}}>
-              <View 
-                style={{
-                  marginTop: 50,
-                  width: '70%',
-                  height: '50%',
-                  backgroundColor: COLORS.white,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  borderRadius: SIZES.radius,
-                }}
-                >
-                <Text style={{ color: COLORS.darkBlue, fontWeight: '800' }}>
-                  161 Floral Blvd
-                </Text>
-              </View>
         </View>
+
+        <View style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+                paddingRight: SIZES.width/10,
+                paddingLeft: SIZES.width/10,
+            }}>
+                <Image
+                    style={{ 
+                    width: 200, 
+                    height: SIZES.largeTitle,
+                    marginTop: 50 
+                    }}
+                    resizeMode="contain"
+                    source={images.tonysBanner}
+                />
+            </View>
 
         <TouchableOpacity
           style={{
             width: 50,
-            //paddingRight: SIZES.padding *2,
+            //justifyContent: 'center',
+            paddingRight: SIZES.padding *2,
+            marginTop: 30,
             justifyContent: 'center',
           }}
           onPress={() => navigation.navigate("Cart",{ orderItem: {} })}
         >
-            <Image 
-              source={icons.shoppingCart}
-              resizeMode="contain"
-              style={{
-                width: 35,
-                height: 35,
-                tintColor: COLORS.darkBlue,
-                marginTop: 50
-              }}
-            />
+
+            {renderCartIcon()}
         </TouchableOpacity>
 
       </View>
     )
   }
 
+  function renderCartIcon() {
+    if (cart.length > 0) {
+      return (<>
+        <Image 
+              source={icons.shoppingCart}
+              resizeMode="contain"
+              style={{
+                width: 35,
+                height: 35,
+                tintColor: COLORS.darkBlue,
+              }}
+            />
+        
 
+          
+            <Animatable.View style={{
+              backgroundColor: COLORS.pink,
+              width: 20,
+              height: 20,
+              marginTop: 0,
+              borderRadius: 10,
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginTop: -43,
+              marginLeft: 20,
+            }}
+            animation='bounceIn'
+            duration={1500}
+            >
+              <Text style={{
+                color: COLORS.white,
+              }}> {numItems} </Text>
+            </Animatable.View>
+        </>
+      )
+    } else {
+
+      return (
+        <Image 
+          source={icons.shoppingCart}
+          resizeMode="contain"
+          style={{
+            width: 35,
+            height: 35,
+            tintColor: COLORS.darkBlue,
+            marginTop: 17,
+            //marginRight: 10,
+          }}
+        />
+      )
+
+    }
+  }
 
 
   function onSelectCategory(category) {
     // Filter resteraunt
-
-    let filteredFoods = foodList.filter(food => food.categoryID == category.id);
-    setFoods(filteredFoods);
     setSelectedCategory(category);
+    let filteredFoods = foodList.filter(food => parseInt(food.categoryID) == category.id);
+    setFoods(filteredFoods);
     
-    foodFlatList.current.scrollToIndex({index: 0});
-    
+    if (foodFlatList.current.length > 0) {
+      foodFlatList.current.scrollToIndex({index: 0});
+    }
   };
 
   function renderCategories(category, categoryList) {
@@ -161,10 +319,10 @@ const Menu = ({ navigation }) => {
     const renderFood = ({item}) => {
       var foodNameLen = item.name.length;
       var price;
-      if (item.price === 0.00 ) {
+      if (parseFloat(item.price) === 0.00 ) {
         price = ' ';
       } else {
-        price = "$"+item.price.toFixed(2);
+        price = "$"+parseFloat(item.price).toFixed(2);
       }
 
       return (
@@ -228,12 +386,13 @@ const Menu = ({ navigation }) => {
   return (
     <SafeAreaView style={{
         backgroundColor: COLORS.white,
+        height: SIZES.height
       }}
     >
       {renderHeader()}
         <SafeAreaView>
           {renderCategories("Categories", categories)}
-          {renderFoodList()}
+          {foods && renderFoodList()}
         </SafeAreaView>
     </SafeAreaView>
     )

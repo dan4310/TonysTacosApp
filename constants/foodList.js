@@ -1,15 +1,4 @@
-import { 
-    riceOrLettuce, 
-    redOrGreen, 
-    tacoModifiers,
-    bowlModifiers,
-    nachosModifiers,
-    pizzadillaModifiers,
-    smallOrLarge,
-    guacSize,
-    sodas,
-} from './modifiers';
-import specials from './specials';
+
 
 const foodList = [
     // Mexican Tacos
@@ -19,8 +8,8 @@ const foodList = [
         categoryID: 1,
         desc: 'Grilled steak, onions, cilantro, Tony\'s sauce',
         price: 4.50,
-        modifiers: tacoModifiers,
-        choices: redOrGreen,
+        modifiers: "tacoModifiers",
+        choices: "redOrGreen",
     },
     {
         id: 2, 
@@ -28,8 +17,8 @@ const foodList = [
         categoryID: 1,
         desc: 'Shredded chicken, onions, cilantro, Tony\'s sauce',
         price: 3.50,
-        modifiers: tacoModifiers,
-        choices: redOrGreen,
+        modifiers: "tacoModifiers",
+        choices: "redOrGreen",
     },
     {
         id: 3, 
@@ -37,8 +26,8 @@ const foodList = [
         categoryID: 1,
         desc: 'Pulled pork, onions, cilantro, Tony\'s sauce',
         price: 3.50,
-        modifiers: tacoModifiers,
-        choices: redOrGreen,
+        modifiers: "tacoModifiers",
+        choices: "redOrGreen",
     },
     {
         id: 4, 
@@ -46,8 +35,8 @@ const foodList = [
         categoryID: 1,
         desc: 'Mexican sausage, onions, cilantro, Tony\'s sauce',
         price: 3.50,
-        modifiers: tacoModifiers,
-        choices: redOrGreen,
+        modifiers: "tacoModifiers",
+        choices: "redOrGreen",
     },
     {
         id: 5, 
@@ -55,8 +44,8 @@ const foodList = [
         categoryID: 1,
         desc: 'Grilled shrimp, onions, cilantro, Tony\'s sauce',
         price: 4.50,
-        modifiers: tacoModifiers,
-        choices: redOrGreen,
+        modifiers: "tacoModifiers",
+        choices: "redOrGreen",
     },
     {
         id: 6, 
@@ -64,8 +53,8 @@ const foodList = [
         categoryID: 1,
         desc: 'Roasted cauliflower, onions, cilantro, Tony\'s sauce',
         price: 3.50,
-        modifiers: tacoModifiers,
-        choices: redOrGreen,
+        modifiers: "tacoModifiers",
+        choices: "redOrGreen",
     },
     {
         id: 7, 
@@ -73,8 +62,8 @@ const foodList = [
         categoryID: 1,
         desc: 'Shredded beef, onions, cilantro, Tony\'s sauce',
         price: 4.00,
-        modifiers: tacoModifiers,
-        choices: redOrGreen,
+        modifiers: "tacoModifiers",
+        choices: "redOrGreen",
     },
     // Italian Tacos
     {
@@ -83,7 +72,7 @@ const foodList = [
         categoryID: 2,
         desc: 'Mexican sausage, lava cheese, broccoli rabe, cherry peppers',
         price: 5.00,
-        modifiers: tacoModifiers,
+        modifiers: "tacoModifiers",
     },
     {
         id: 9, 
@@ -91,7 +80,7 @@ const foodList = [
         categoryID: 2,
         desc: 'Fried chicken cutlet, lava cheese, tomato sauce',
         price: 5.00,
-        modifiers: tacoModifiers,
+        modifiers: "tacoModifiers",
     },
     {
         id: 10, 
@@ -99,7 +88,7 @@ const foodList = [
         categoryID: 2,
         desc: 'Cheesesteak, carmalized onions, roasted red peppers',
         price: 5.50,
-        modifiers: tacoModifiers,
+        modifiers: "tacoModifiers",
     },
     {
         id: 11, 
@@ -107,7 +96,7 @@ const foodList = [
         categoryID: 2,
         desc: 'Grilled steak, lava cheese, roasted red peppers',
         price: 5.50,
-        modifiers: tacoModifiers,
+        modifiers: "tacoModifiers",
     },
     {
         id: 12, 
@@ -115,7 +104,7 @@ const foodList = [
         categoryID: 2,
         desc: 'Ravioli, lava cheese, tomato sauce',
         price: 4.50,
-        modifiers: tacoModifiers,
+        modifiers: "tacoModifiers",
     },
     {
         id: 13, 
@@ -123,7 +112,7 @@ const foodList = [
         categoryID: 2,
         desc: 'Grilled shrimp, arugula, pico de gallo, fresh squeezed lime',
         price: 5.50,
-        modifiers: tacoModifiers,
+        modifiers: "tacoModifiers",
     },
     {
         id: 14, 
@@ -131,7 +120,7 @@ const foodList = [
         categoryID: 2,
         desc: 'Shredded chicken, mango, jalapeno, cilantro, Tony\'s green sauce',
         price: 5.00,
-        modifiers: tacoModifiers,
+        modifiers: "tacoModifiers",
     },
     {
         id: 15, 
@@ -139,7 +128,7 @@ const foodList = [
         categoryID: 2,
         desc: 'Grilled steak, marinated eggplant, parsley',
         price: 5.00,
-        modifiers: tacoModifiers,
+        modifiers: "tacoModifiers",
     },
     {
         id: 16, 
@@ -147,7 +136,7 @@ const foodList = [
         categoryID: 2,
         desc: 'Shredded beef, corn, black beans, lava cheese, cilantro, jalapeno',
         price: 5.00,
-        modifiers: tacoModifiers,
+        modifiers: "tacoModifiers",
     },
     {
         id: 17, 
@@ -155,7 +144,7 @@ const foodList = [
         categoryID: 2,
         desc: 'Sausage, lava cheese, roasted red peppers',
         price: 5.00,
-        modifiers: tacoModifiers,
+        modifiers: "tacoModifiers",
     },
     {
         id: 18, 
@@ -163,7 +152,7 @@ const foodList = [
         categoryID: 2,
         desc: 'Hot dog, lava cheese, fries, spicy mayo',
         price: 4.50,
-        modifiers: tacoModifiers,
+        modifiers: "tacoModifiers",
     },
     {
         id: 19, 
@@ -171,7 +160,7 @@ const foodList = [
         categoryID: 2,
         desc: 'Brussel sprouts, caramelized onions, Tony\'s red sauce, sour cream',
         price: 5.00,
-        modifiers: tacoModifiers,
+        modifiers: "tacoModifiers",
     },
     {
         id: 20, 
@@ -179,7 +168,7 @@ const foodList = [
         categoryID: 2,
         desc: 'Grilled shrimp, mango, rice, spicy mayo',
         price: 5.50,
-        modifiers: tacoModifiers,
+        modifiers: "tacoModifiers",
     },
     {
         id: 21, 
@@ -187,7 +176,7 @@ const foodList = [
         categoryID: 2,
         desc: 'Shredded beef, onion sauce, parsley, parmigiano',
         price: 5.00,
-        modifiers: tacoModifiers,
+        modifiers: "tacoModifiers",
     },
     {
         id: 22, 
@@ -195,7 +184,7 @@ const foodList = [
         categoryID: 2,
         desc: 'Fried chicken cutlet, pico de gallo, lettuce, shredded cheese, spicy mayo',
         price: 5.50,
-        modifiers: tacoModifiers,
+        modifiers: "tacoModifiers",
     },
     {
         id: 23, 
@@ -203,7 +192,7 @@ const foodList = [
         categoryID: 2,
         desc: 'Butternut squash, burrata, red beans, burrata, cayenne, cinnamon',
         price: 5.00,
-        modifiers: tacoModifiers,
+        modifiers: "tacoModifiers",
     },
     {
         id: 24, 
@@ -211,7 +200,7 @@ const foodList = [
         categoryID: 2,
         desc: 'Italian veggie red bean chili, rice',
         price: 4.50,
-        modifiers: tacoModifiers,
+        modifiers: "tacoModifiers",
     },
     {
         id: 25, 
@@ -219,7 +208,7 @@ const foodList = [
         categoryID: 2,
         desc: 'Shredded chicken, butternut squash, brussels, shredded cheese',
         price: 5.00,
-        modifiers: tacoModifiers,
+        modifiers: "tacoModifiers",
     },
     {
         id: 26, 
@@ -227,7 +216,7 @@ const foodList = [
         categoryID: 2,
         desc: 'grilled octopus, diced potato, beans, greek yogurt',
         price: 6.00,
-        modifiers: tacoModifiers,
+        modifiers: "tacoModifiers",
     },
     {
         id: 27, 
@@ -235,7 +224,7 @@ const foodList = [
         categoryID: 2,
         desc: 'Fried cod bites, broccoli rabe, cherry pepper aioli',
         price: 6.00,
-        modifiers: tacoModifiers,
+        modifiers: "tacoModifiers",
     },
     {
         id: 28, 
@@ -243,7 +232,7 @@ const foodList = [
         categoryID: 2,
         desc: 'Shredded chicken, carmalized onion, red pepper, diced potato, sour cream',
         price: 5.00,
-        modifiers: tacoModifiers,
+        modifiers: "tacoModifiers",
     },
     {
         id: 29, 
@@ -251,7 +240,7 @@ const foodList = [
         categoryID: 2,
         desc: 'Melted mozzarella tortilla, roasted cauliflower, lava cheese',
         price: 5.00,
-        modifiers: tacoModifiers,
+        modifiers: "tacoModifiers",
     },
     // Tasty Plates
     {
@@ -267,7 +256,7 @@ const foodList = [
         categoryID: 3,
         desc: 'Tortilla chips, jalapeno, pico de gallo, lava cheese, sour cream',
         price: 7.00,
-        modifiers: nachosModifiers,
+        modifiers: "nachosModifiers",
     },
     {
         id: 32, 
@@ -275,7 +264,7 @@ const foodList = [
         categoryID: 3,
         desc: 'Tortilla chips, jalapeno, pico de gallo, lava cheese, sour cream, black beans, corn',
         price: 9.00,
-        modifiers: nachosModifiers,
+        modifiers: "nachosModifiers",
     },
     {
         id: 33, 
@@ -283,7 +272,7 @@ const foodList = [
         categoryID: 3,
         desc: 'French fries, jalapeno, pico de gallo, lava cheese, sour cream',
         price: 9.00,
-        modifiers: nachosModifiers,
+        modifiers: "nachosModifiers",
     },
     {
         id: 34, 
@@ -305,7 +294,7 @@ const foodList = [
         categoryID: 3,
         desc: 'Guacamole and tortilla chips',
         price: 0.00,
-        choices: guacSize,
+        choices: "guacSize",
     },
     {
         id: 37, 
@@ -313,7 +302,7 @@ const foodList = [
         categoryID: 3,
         desc: 'White rice and black beans',
         price: 5.00,
-        modifiers: bowlModifiers,
+        modifiers: "bowlModifiers",
     },
     {
         id: 38, 
@@ -342,8 +331,8 @@ const foodList = [
         categoryID: 3,
         desc: 'Rice or lettuce, black beans, guac, shredded beef, sour cream, Tony\'s red sauce',
         price: 9.95,
-        modifiers: bowlModifiers,
-        choices: riceOrLettuce,
+        modifiers: "bowlModifiers",
+        choices: "riceOrLettuce",
         image: require('../assets/images/mexBowl.png'),
     },
     {
@@ -352,8 +341,8 @@ const foodList = [
         categoryID: 3,
         desc: 'Rice or lettuce, cauliflower, brussel sprouts, caramelized onions, sour cream, Tony\'s red sauce',
         price: 10.95,
-        modifiers: bowlModifiers,
-        choices: riceOrLettuce,
+        modifiers: "bowlModifiers",
+        choices: "riceOrLettuce",
     },
     {
         id: 43, 
@@ -376,7 +365,7 @@ const foodList = [
         categoryID: 4,
         desc: 'Tomato sauce, burrata, spicy pepper',
         price: 10.00,
-        modifiers: pizzadillaModifiers,
+        modifiers: "pizzadillaModifiers",
     },
     {
         id: 46, 
@@ -384,7 +373,7 @@ const foodList = [
         categoryID: 4,
         desc: 'White pizzadilla, burrata, marinated eggplant',
         price: 13.00,
-        modifiers: pizzadillaModifiers,
+        modifiers: "pizzadillaModifiers",
     },
     {
         id: 47, 
@@ -392,7 +381,7 @@ const foodList = [
         categoryID: 4,
         desc: 'Mozzarella, buffalo chicken, bleu cheese',
         price: 11.00,
-        modifiers: pizzadillaModifiers,
+        modifiers: "pizzadillaModifiers",
     },
     {
         id: 48, 
@@ -400,7 +389,7 @@ const foodList = [
         categoryID: 4,
         desc: 'Buffalo cauliflower, mozzarella, bleu cheese',
         price: 11.00,
-        modifiers: pizzadillaModifiers,
+        modifiers: "pizzadillaModifiers",
     },
     {
         id: 49, 
@@ -408,7 +397,7 @@ const foodList = [
         categoryID: 4,
         desc: 'Barbacoa, black beans, corn, lava cheese, pico de gallo',
         price: 12.00,
-        modifiers: pizzadillaModifiers,
+        modifiers: "pizzadillaModifiers",
     },
     {
         id: 50, 
@@ -416,7 +405,7 @@ const foodList = [
         categoryID: 4,
         desc: 'Mozzarella, roasted brussels, back beans, parmiggiano',
         price: 12.00,
-        modifiers: pizzadillaModifiers,
+        modifiers: "pizzadillaModifiers",
     },
     {
         id: 51, 
@@ -424,7 +413,7 @@ const foodList = [
         categoryID: 4,
         desc: 'Tomato sauce, mozzarella, parmiggiano',
         price: 9.00,
-        modifiers: pizzadillaModifiers,
+        modifiers: "pizzadillaModifiers",
     },
     {
         id: 52, 
@@ -432,7 +421,7 @@ const foodList = [
         categoryID: 4,
         desc: 'Chorizo, borcoli rabe, lava cheese',
         price: 12.00,
-        modifiers: pizzadillaModifiers,
+        modifiers: "pizzadillaModifiers",
     },
     {
         id: 53, 
@@ -440,7 +429,7 @@ const foodList = [
         categoryID: 4,
         desc: 'Fried chicken cutlet, mozzarella, fries, lava cheese',
         price: 12.00,
-        modifiers: pizzadillaModifiers,
+        modifiers: "pizzadillaModifiers",
     },
     {
         id: 54, 
@@ -448,7 +437,7 @@ const foodList = [
         categoryID: 4,
         desc: 'Butternut squash, mozzarella, red beads, cayenne, cinnamon',
         price: 12.00,
-        modifiers: pizzadillaModifiers,
+        modifiers: "pizzadillaModifiers",
     },
     {
         id: 55, 
@@ -456,7 +445,7 @@ const foodList = [
         categoryID: 4,
         desc: 'Black beans, corn, red pepper, jalapeno, lava cheese',
         price: 11.00,
-        modifiers: pizzadillaModifiers,
+        modifiers: "pizzadillaModifiers",
     },
     {
         id: 56, 
@@ -464,7 +453,7 @@ const foodList = [
         categoryID: 4,
         desc: 'Shredded chicken, mozzarella, lava cheese',
         price: 11.00,
-        modifiers: pizzadillaModifiers,
+        modifiers: "pizzadillaModifiers",
     },
     {
         id: 57, 
@@ -472,7 +461,7 @@ const foodList = [
         categoryID: 4,
         desc: 'Stuffed tortilla crust with philly cheesesteak, broccoli rabe, peppers, onions',
         price: 14.00,
-        modifiers: pizzadillaModifiers,
+        modifiers: "pizzadillaModifiers",
     },
     {
         id: 58, 
@@ -480,7 +469,7 @@ const foodList = [
         categoryID: 4,
         desc: 'Mozzarella, pico de gallo, octopus, shrimp, red beans',
         price: 15.00,
-        modifiers: pizzadillaModifiers,
+        modifiers: "pizzadillaModifiers",
     },
     // Desserts
     {
@@ -504,7 +493,7 @@ const foodList = [
         categoryID: 6,
         desc: 'Fresh squeezed mango juice',
         price: 0.00,
-        choices: smallOrLarge,
+        choices: "smallOrLarge",
     },
     {
         id: 62, 
@@ -512,7 +501,7 @@ const foodList = [
         categoryID: 6,
         desc: 'Fresh squeezed passion fruit juice',
         price: 0.00,
-        choices: smallOrLarge,
+        choices: "smallOrLarge",
     },
     {
         id: 63, 
@@ -520,7 +509,7 @@ const foodList = [
         categoryID: 6,
         desc: 'Lemonade with fresh squeezed blueberries',
         price: 0.00,
-        choices: smallOrLarge,
+        choices: "smallOrLarge",
     },
     {
         id: 64, 
@@ -535,7 +524,7 @@ const foodList = [
         categoryID: 6,
         desc: 'Drinks',
         price: 2.25,
-        choices: sodas,
+        choices: "sodas",
     },
     // Margaritas
     {
@@ -544,13 +533,7 @@ const foodList = [
         categoryID: 7,
         desc: 'Lemon and lime juice margarita',
         price: 9.00,
-        modifiers: [
-            {
-                id: 1,
-                name: "Extra shot",
-                price: 3.00
-            }
-        ],
+        modifiers: "shots",
     },
     {
         id: 67, 
@@ -558,13 +541,7 @@ const foodList = [
         categoryID: 7,
         desc: 'Mango juice margarita',
         price: 9.00,
-        modifiers: [
-            {
-                id: 1,
-                name: "Extra shot",
-                price: 3.00
-            }
-        ],
+        modifiers: "shots",
     },
     {
         id: 68, 
@@ -572,13 +549,7 @@ const foodList = [
         categoryID: 7,
         desc: 'Passion fruit margarita',
         price: 9.00,
-        modifiers: [
-            {
-                id: 1,
-                name: "Extra shot",
-                price: 3.00
-            }
-        ],
+        modifiers: "shots",
     },
     {
         id: 69, 
@@ -586,13 +557,7 @@ const foodList = [
         categoryID: 7,
         desc: 'Guava juice margarita',
         price: 9.00,
-        modifiers: [
-            {
-                id: 1,
-                name: "Extra shot",
-                price: 3.00
-            }
-        ],
+        modifiers: "shots",
     },
     {
         id: 70, 
@@ -600,13 +565,7 @@ const foodList = [
         categoryID: 7,
         desc: 'Classica margarita with crushed jalapenos',
         price: 9.00,
-        modifiers: [
-            {
-                id: 1,
-                name: "Extra shot",
-                price: 3.00
-            }
-        ],
+        modifiers: "shots",
     },
     {
         id: 71, 
@@ -614,13 +573,7 @@ const foodList = [
         categoryID: 7,
         desc: 'Margarita with the Italian liqour: Aperol',
         price: 9.00,
-        modifiers: [
-            {
-                id: 1,
-                name: "Extra shot",
-                price: 3.00
-            }
-        ],
+        modifiers: "shots",
     },
     {
         id: 72, 
@@ -628,13 +581,7 @@ const foodList = [
         categoryID: 7,
         desc: 'Frozen mango juice margarita',
         price: 10.00,
-        modifiers: [
-            {
-                id: 1,
-                name: "Extra shot",
-                price: 3.00
-            }
-        ],
+        modifiers: "shots",
     },
     {
         id: 73, 
@@ -642,21 +589,9 @@ const foodList = [
         categoryID: 7,
         desc: 'Frozen margarita with tequila soaked gummy bears, guava and passion fruit juice',
         price: 10.00,
-        modifiers: [
-            {
-                id: 1,
-                name: "Extra shot",
-                price: 3.00
-            }
-        ],
+        modifiers: "shots",
     }
 ];
 
-var foodListLen = foodList.length;
-
-for (var i = 0; i < specials.length; i++) {
-    specials[i].id += foodListLen;
-    foodList.push(specials[i]);
-}
 
 export default foodList;

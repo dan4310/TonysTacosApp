@@ -1,5 +1,5 @@
 import { NavigationContainer } from '@react-navigation/native';
-import React, {useRef} from 'react';
+import React, {useContext, useRef} from 'react';
 import {
     StyleSheet,
     SafeAreaView,
@@ -9,29 +9,31 @@ import {
     Image,
     FlatList,
 } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
-import { withSafeAreaInsets } from 'react-native-safe-area-context';
+import * as Animatable from 'react-native-animatable';
 
 import {icons, images, COLORS, SIZES, categories, foodList } from '../constants';
 import { render } from 'react-dom';
 import { or } from 'react-native-reanimated';
+import {CartContext} from '../context/CartContext';
 
-var cartAction = 'addToCart';
 var item = {};
 
+var orderId = 0;
+
 const Food = ({ route, navigation }) => {
-    //let {item, mods, selections}  = route.params;
     item = route.params.item;
+
+    const [cart, setCart] = useContext(CartContext);
     
     const [food, setFood] = React.useState(item);
     
     const [orderItem, setOrderItem] = React.useState({
       id: 0,
       food: food,
-      quantity: 1,
-      mods: [],
-      choice: (item.hasOwnProperty('choices') ? item.choices[0] : {}),
-      total: food.price+ (item.hasOwnProperty('choices') ? item.choices[0].price : 0),
+      quantity: route.params.hasOwnProperty('quantity') ? route.params.quantity : 1,
+      mods: route.params.hasOwnProperty('mods') ? route.params.mods : [],
+      choice: route.params.hasOwnProperty('choice') ? route.params.choice :  (food.hasOwnProperty('choices') ? food.choices[0] : {}),
+      total: food.price + (item.hasOwnProperty('choices') ? item.choices[0].price : 0),
     })
   
 
@@ -287,15 +289,24 @@ const Food = ({ route, navigation }) => {
         )
     }
 
+    function onAddToCart(foodItem) {
+      orderItem.id = ++orderId;
+      setCart([...cart, orderItem]);
+      navigation.goBack();
+    }
+
     function renderOrder() {
       
       return (
-        <View style={{
-          borderTopLeftRadius: 40,
-          borderTopRightRadius: 40,
-          backgroundColor: COLORS.secondary,
-          height: 250,
-        }}>
+        <Animatable.View style={{
+            borderTopLeftRadius: 40,
+            borderTopRightRadius: 40,
+            backgroundColor: COLORS.secondary,
+            height: 250,
+          }}
+          animation='bounceInUp'
+          duration={1500}
+        >
           <View style={{
             flexDirection: 'row',
             justifyContent: 'space-between',
@@ -323,18 +334,16 @@ const Food = ({ route, navigation }) => {
               alignItems: 'center',
               borderRadius: SIZES.radius,
             }}
-            onPress={() => navigation.navigate("Cart", {
-              orderItem: orderItem
-            })}
+            onPress={() => onAddToCart(orderItem)}
             >
 
-              <Text style={styles.order}>Add to cart</Text>
+              <Text style={styles.order}> Add to cart </Text>
 
 
             </TouchableOpacity>
           </View>
 
-        </View>
+        </Animatable.View>
       )
     }
 
@@ -387,12 +396,8 @@ const Food = ({ route, navigation }) => {
               <View style={{
                       justifyContent: 'center',
                       marginLeft: 2,
-                      //paddingLeft: 5,
                       marginBottom: SIZES.padding,
-                      //paddingTop: SIZES.padding*2,
-                      //marginTop: SIZES.padding * 2,
                       width: SIZES.width*0.95,
-                      //backgroundColor: COLORS.secondary,
                     }}>
                     <Text style={styles.modifyTitle}>
                       Customize
@@ -406,6 +411,12 @@ const Food = ({ route, navigation }) => {
           keyExtractor={(a, index) => a.id.toString()}
           renderItem={renderModifier}
           contentContainerStyle={{ paddingVertical: SIZES.padding }}
+          ListFooterComponent={
+            <View style={{
+              height: SIZES.height*0.4,
+              
+            }}></View>
+          }
         />  
         )
       } else {
@@ -511,12 +522,16 @@ const Food = ({ route, navigation }) => {
         </SafeAreaView>
 
         <SafeAreaView style={{
-          height: SIZES.height-260,
+          height: SIZES.height+SIZES.height*0.12,
         }}>
           {renderModifiers()}
         </SafeAreaView>
 
-        <SafeAreaView>
+        <SafeAreaView style={{
+          borderTopLeftRadius: 40,
+          borderTopRightRadius: 40,
+          marginTop: -SIZES.height*0.45,
+        }}>
           {renderOrder()}
         </SafeAreaView>
 

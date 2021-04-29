@@ -12,7 +12,7 @@ You can also check out my other project: [MLB database analysis site](https://da
 
 ---
 
-<table>
+<table style="text-align:center;">
     <tr>
         <td>
         <img src="https://daniel.courtneyco.com/TonysTacos/homePage.png" alt="home1" width="300"/>

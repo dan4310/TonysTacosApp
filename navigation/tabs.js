@@ -9,12 +9,20 @@ import { createBottomTabNavigator, ButtonTabBar } from '@react-navigation/bottom
 import {Home, Menu, Account, Deals} from "../screens";
 
 import { COLORS, icons, SIZES } from "../constants";
-import { withSafeAreaInsets } from 'react-native-safe-area-context';
+import {AuthContext} from '../context/AuthContext';
+import firebase from '../firebase';
 
 const Tab = createBottomTabNavigator();
 
 
 const Tabs = () => {
+
+    const {logout} = React.useContext(AuthContext);
+
+    React.useEffect(() => {
+        logout();
+    }, [])
+ 
     return (
         <Tab.Navigator
             tabBarOptions={{
@@ -43,18 +51,8 @@ const Tabs = () => {
                                     alignItems: 'center',
                                     justifyContent: 'center',
                                 }}
-                            /> 
-                            <Text 
-                                style={{
-                                    justifyContent: 'center',
-                                    color: focused ? COLORS.pink : COLORS.darkBlue,
-                                    fontWeight: focused ? '800' : '300',
-                                    fontSize: SIZES.body5,
-                                    paddingTop: 2,
-                                }}
-                            >
-                                Home
-                            </Text>
+                            />
+                            
                         </View>
                     )
                 }}    
@@ -78,17 +76,7 @@ const Tabs = () => {
                                     justifyContent: 'center',
                                 }}
                             /> 
-                            <Text 
-                                style={{
-                                    justifyContent: 'center',
-                                    color: focused ? COLORS.pink : COLORS.darkBlue,
-                                    fontWeight: focused ? '800' : '300',
-                                    fontSize: SIZES.body5,
-                                    paddingTop: 2,
-                                }}
-                            >
-                                Order
-                            </Text>
+                            
                         </View>
                     )
                 }}    
@@ -112,17 +100,7 @@ const Tabs = () => {
                                     justifyContent: 'center',
                                 }}
                             /> 
-                            <Text 
-                                style={{
-                                    justifyContent: 'center',
-                                    color: focused ? COLORS.pink : COLORS.darkBlue,
-                                    fontWeight: focused ? '800' : '300',
-                                    fontSize: SIZES.body5,
-                                    paddingTop: 2,
-                                }}
-                            >
-                                Deals
-                            </Text>
+                            
                         </View>
                     )
                 }}    
@@ -146,17 +124,7 @@ const Tabs = () => {
                                     justifyContent: 'center',
                                 }}
                             /> 
-                            <Text 
-                                style={{
-                                    justifyContent: 'center',
-                                    color: focused ? COLORS.pink : COLORS.darkBlue,
-                                    fontWeight: focused ? '800' : '300',
-                                    fontSize: SIZES.body5,
-                                    paddingTop: 2,
-                                }}
-                            >
-                                Account
-                            </Text>
+                            
                         </View>
                     )
                 }}    
@@ -167,3 +135,17 @@ const Tabs = () => {
 }
 
 export default Tabs;
+
+/*
+<Text 
+    style={{
+    justifyContent: 'center',
+    color: focused ? COLORS.pink : COLORS.darkBlue,
+    fontWeight: focused ? '800' : '300',
+    fontSize: SIZES.body5,
+    paddingTop: 2,
+    }}
+>
+    Home
+/Text>
+*/
