@@ -289,6 +289,21 @@ export const sodas = [
     }
 ]
 
+export const shots = [
+    {
+        id: 1,
+        name: 'add shot',
+        desc: 'add a shot',
+        price: 3.50
+    },
+    {
+        id: 2,
+        name: 'add 2 shot',
+        desc: 'add double shot',
+        price: 6.00,
+    }
+]
+
 
 export default {
     riceOrLettuce, 
@@ -299,5 +314,6 @@ export default {
     pizzadillaModifiers,
     smallOrLarge,
     guacSize,
+    shots,
     sodas,
 }

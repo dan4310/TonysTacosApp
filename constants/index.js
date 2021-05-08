@@ -6,6 +6,7 @@ import populars from "./populars";
 import categories from './categories';
 import storeList from './storeList';
 import foodList from './foodList';
+import modifiers from './modifiers';
 
 export { 
     COLORS, 
@@ -18,4 +19,5 @@ export {
     categories, 
     storeList,
     foodList,
+    modifiers,
 };

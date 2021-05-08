@@ -1,9 +1,11 @@
 {
   "expo": {
     "name": "TonysTacos",
+    "owner": "dan4310",
     "slug": "TonysTacos",
     "version": "1.0.0",
     "orientation": "portrait",
+    "description": "This is a food ordering app that I am building. You will need to create an account to sign into the app. You can register a phony email to get an account as I am not validating the emails at the minute, however, the email must be properly formatted (something@someOtherThing.lastThing).",
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",

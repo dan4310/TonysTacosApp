@@ -9,37 +9,41 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import Tabs from './navigation/tabs';
 
 import { Home, Menu, Account, Deals, Food, Cart, Login } from './screens';
-import { COLORS, images, SIZES } from './constants';
+import {COLORS} from './constants';
 import { CartProvider } from './context/CartContext';
-
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import Routes from './navigation/Routes';
+import Toast from 'react-native-fast-toast';
 
 import { AuthProvider } from './context/AuthContext';
 
-const Stack = createStackNavigator();
-
 const App = () => {
-
-  
-
+ 
   return (
     <AuthProvider>
       <CartProvider>
-        <NavigationContainer>
-          
-          <Stack.Navigator
-            screenOptions={{
-                headerShown: false          
-            }}
-            initialRouteName={"Home"}
-          > 
-            <Stack.Screen name="Home" component={Tabs} />
-            <Stack.Screen name="Food" component={Food} />
-            <Stack.Screen name="Cart" component={Cart} />
-            <Stack.Screen name="Login" component={Login} />
-          </Stack.Navigator>
-        </NavigationContainer>
+        <Routes/>
+        <Toast 
+          ref={(ref) => global['toast'] = ref}
+          placement='top'
+          dangerColor={COLORS.pink}
+          dangerIcon={
+            <FontAwesome 
+              name='warning'
+              color={COLORS.white}
+              size={20}
+            />}
+          successColor={COLORS.secondary}
+          successIcon={
+            <FontAwesome 
+              name='check'
+              color={COLORS.white}
+              size={20}
+            />}
+        />
       </CartProvider>
     </AuthProvider>
+    
   )
 }
 

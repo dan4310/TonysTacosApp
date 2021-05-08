@@ -20,46 +20,61 @@ import { CartContext } from '../context/CartContext';
 import * as Animatable from 'react-native-animatable';
 import { useEffect } from 'react';
 import firebase from '../firebase';
-import 'firebase/database';
+import 'firebase/storage'
 
 const Menu = ({ navigation }) => {
+
   const [foodList, setFoodList] = React.useState([]);
 
   const [cart, setCart] = useContext(CartContext);
   const [foods, setFoods] = React.useState(null);
   
-  const [foodData, setFoodData] = React.useState([]);
-  const [modData, setModData] = React.useState({});
+  const [selectedCategory, setSelectedCategory] = React.useState(null);
 
-  useEffect(() => {
-   firebase.database().ref('modifiers').get()
-   .then((response) => {
-      return response
-    })
-    .then(mods => {
-      
-      firebase.database().ref('foodList/foods').get()
-        .then(response => {
+  function getData() {
+      firebase.database().ref('modifiers').get()
+      .then((response) => {
           return response
         })
-        .then((data) => {storeInitialFoods(data.val(), {
-          redOrGreen: mods.val().redOrGreen,
-          tacoModifiers: mods.val().tacoModifiers,
-          riceOrLettuce: mods.val().riceOrLettuce,
-          bowlModifiers: mods.val().bowlModifiers,
-          nachosModifiers: mods.val().nachosModifiers,
-          pizzadillaModifiers: mods.val().pizzadillaModifiers,
-          guacSize: mods.val().guacSize,
-          smallOrLarge: mods.val().smallOrLarge,
-          sodas: mods.val().sodas,
-        })})
+        .then(mods => {
+          firebase.database().ref('foodList/foods').get()
+            .then(response => {
+              return response
+            })
+            .then((foodList) => {
+              firebase.database().ref('specials/specials').get()
+              .then(response => {
+                return response
+              })
+              .then(specialsList => {
+                storeInitialFoods(foodList.val(), {
+                  redOrGreen: mods.val().redOrGreen,
+                  tacoModifiers: mods.val().tacoModifiers,
+                  riceOrLettuce: mods.val().riceOrLettuce,
+                  bowlModifiers: mods.val().bowlModifiers,
+                  nachosModifiers: mods.val().nachosModifiers,
+                  pizzadillaModifiers: mods.val().pizzadillaModifiers,
+                  guacSize: mods.val().guacSize,
+                  shots: mods.val().shots,
+                  smallOrLarge: mods.val().smallOrLarge,
+                  sodas: mods.val().sodas,
+                }, specialsList.val())
+              })
+              .catch((error) => console.error(error));
+            })
+            .catch((error) => console.error(error))
+        
+        })
         .catch((error) => console.error(error))
-     
-    })
-    .catch((error) => console.error(error))
+  }
+
+  useEffect(() => {
+   getData();
   }, [])
 
-  function storeInitialFoods(foodData, modData) {
+
+  function storeInitialFoods(foodData, modData, specialsData) {
+
     var modsCategories = {};
       for (var key in modData) {
         var modList = [];
@@ -107,6 +122,9 @@ const Menu = ({ navigation }) => {
             case "nachosModifiers":
               mods = modifiers.nachosModifiers;
               break;
+            case "shots":
+              mods = modifiers.shots;
+              break;
           }
           foodTemp = {
             ...foodTemp,
@@ -141,16 +159,23 @@ const Menu = ({ navigation }) => {
           foodTemp = {
             ...foodTemp,
             image: foodData[i].image
-          }
+          }; 
+            
         }
         
         foodList.push(foodTemp);
+      }
+
+      for (var i = 0; i < specialsData.length; i++) {
+        foodList.push({
+          ...specialsData[i],
+          id: foodData.length + specialsData[i].id
+        });
       }
       setFoods(foodList);
       setFoodList(foodList);
   }
     
-  const [selectedCategory, setSelectedCategory] = React.useState(null);
   const numItems = cart.reduce((acc, curr) => acc + curr.quantity, 0);
   const foodFlatList = useRef();
 
@@ -197,7 +222,9 @@ const Menu = ({ navigation }) => {
             marginTop: 30,
             justifyContent: 'center',
           }}
-          onPress={() => navigation.navigate("Cart",{ orderItem: {} })}
+          onPress={() => {
+            navigation.navigate("Cart",{ orderItem: {} });
+          }}
         >
 
             {renderCartIcon()}
@@ -263,7 +290,6 @@ const Menu = ({ navigation }) => {
 
 
   function onSelectCategory(category) {
-    // Filter resteraunt
     setSelectedCategory(category);
     let filteredFoods = foodList.filter(food => parseInt(food.categoryID) == category.id);
     setFoods(filteredFoods);
@@ -343,7 +369,6 @@ const Menu = ({ navigation }) => {
           })}
         >
             <View style={{
-                //alignSelf: 'flex-start',
                 width: 3*SIZES.width/4,
               }}
             >
@@ -353,7 +378,6 @@ const Menu = ({ navigation }) => {
             </View>
             <View style={{
                 alignSelf: 'center',
-                //width: SIZES.width-175,
                 justifyContent: 'right',
               }}
             >

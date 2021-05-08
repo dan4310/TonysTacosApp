@@ -11,10 +11,10 @@ import {
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 
-import {icons, images, COLORS, SIZES, categories, foodList } from '../constants';
-import { render } from 'react-dom';
-import { or } from 'react-native-reanimated';
+import {icons, images, COLORS, SIZES, specials } from '../constants';
 import {CartContext} from '../context/CartContext';
+import firebase from '../firebase';
+import 'firebase/storage';
 
 var item = {};
 
@@ -22,10 +22,21 @@ var orderId = 0;
 
 const Food = ({ route, navigation }) => {
     item = route.params.item;
-
+  
     const [cart, setCart] = useContext(CartContext);
     
     const [food, setFood] = React.useState(item);
+    const [imageUrl, setImageUrl] = React.useState(null);
+
+    React.useEffect(() => {
+      var url = (food.categoryID == 8) ? 'specials/' : 'foods/';
+      url += food.image;
+      firebase.storage().ref(url).getDownloadURL()
+      .then((url) => {
+        setImageUrl(url);
+      })
+      .catch((error) => console.log("Image not found!"))
+    }, [])
     
     const [orderItem, setOrderItem] = React.useState({
       id: 0,
@@ -35,7 +46,8 @@ const Food = ({ route, navigation }) => {
       choice: route.params.hasOwnProperty('choice') ? route.params.choice :  (food.hasOwnProperty('choices') ? food.choices[0] : {}),
       total: food.price + (item.hasOwnProperty('choices') ? item.choices[0].price : 0),
     })
-  
+
+
 
     function updateOrder(action, newMod) {
       var temp;
@@ -170,9 +182,6 @@ const Food = ({ route, navigation }) => {
 
     function renderFoodInfo(choose, custom) {
 
-      React.useState(() => {
-        setFood(item);
-      })
         return (            
           <View style={{
             flexDirection: 'column',
@@ -187,18 +196,26 @@ const Food = ({ route, navigation }) => {
                 justifyContent: 'center',
                 alignItems: 'center',
             }}>
-
+              {(food.hasOwnProperty('image')) ?
                 <Image 
-                  source={food.hasOwnProperty('image') ? food.image : images.largTaco}
+                  source={{uri: imageUrl}}
                   resizeMode='cover'
                   style={{
                       padding: 5,
                       width: SIZES.width,
                       height: "100%",
                   }}
+                /> :
+                <Image 
+                  source={icons.taco}
+                  resizeMode='cover'
+                  style={{
+                      padding: 5,
+                      width: 50,
+                      height: 50,
+                  }}
                 />
-              
-
+              }
                 <View
                   style={{
                       position: 'absolute',

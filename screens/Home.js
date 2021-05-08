@@ -2,7 +2,6 @@ import React, { useContext } from 'react';
 import { 
   SafeAreaView,
   Text, 
-  //ScrollView,
   View,
   StyleSheet,
   TouchableOpacity,
@@ -10,21 +9,32 @@ import {
   FlatList,
   Animated,
 } from 'react-native';
-import { COLORS, SIZES, FONTS, icons, images, specials, popular, populars, foodList} from '../constants';
+import { COLORS, SIZES, FONTS, icons, images, specials, modifiers} from '../constants';
 import { CartContext } from '../context/CartContext';
 import * as Animatable from 'react-native-animatable';
+import firebase from '../firebase';
+import 'firebase/storage';
+import { AuthContext } from '../context/AuthContext';
+import { useIsFocused } from '@react-navigation/core';
 
 const Home = ({ navigation }) => {
-
+  const {setUser} = React.useContext(AuthContext)
+  const isFocused = useIsFocused();
   
   const scrollX = new Animated.Value(0);
-  const [highlights, setHighlights] = React.useState(specials);
+  const [highlights, setHighlights] = React.useState([]);
+  const [specialsOfWeek, setSpecialsOfWeek] = React.useState([])
   const [cart, setCart] = useContext(CartContext);
   const numItems = cart.reduce((acc, curr) => acc + curr.quantity, 0);
 
   React.useEffect(() => {
-      setHighlights(specials);
-  });
+    firebase.database().ref('specials/specials').get()
+    .then(data => {
+      setSpecialsOfWeek(data.val());
+
+    })
+    setHighlights(images.info);
+  }, [isFocused]);
 
   function renderHeader() {
     return (
@@ -205,7 +215,7 @@ const Home = ({ navigation }) => {
               <View style={{ height: SIZES.height * 0.25 }}>
                 <Image 
                   source={item.image}
-                  resizeMode='cover'
+                  resizeMode='contain'
                   style={{
                     width: SIZES.width,
                     height: '100%'
@@ -225,6 +235,7 @@ const Home = ({ navigation }) => {
 
     function renderReel(category, imageList) {
       var categoryLength = category.length;
+      
       const renderItem = ({item}) => {
         return (
           <View 
@@ -246,7 +257,7 @@ const Home = ({ navigation }) => {
               }}
             >
               <Image 
-                source={item.image}
+                source={/*{uri: item.image}*/item.image}
                 resizeMode='contain'
               />
             </View>
@@ -392,7 +403,7 @@ const Home = ({ navigation }) => {
             {renderDots()}
             {renderLocation()}
             {renderReel("Limited Time", specials)}
-            {renderReel("What's Popular", populars)}
+            {renderReel("What's Popular", specials)}
           </SafeAreaView>
         </Animated.ScrollView>
       </SafeAreaView>

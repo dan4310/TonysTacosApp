@@ -6,7 +6,7 @@ import {
 } from 'react-native';
 import { createBottomTabNavigator, ButtonTabBar } from '@react-navigation/bottom-tabs';
 
-import {Home, Menu, Account, Deals} from "../screens";
+import {Home, Menu, Account, Deals, Login} from "../screens";
 
 import { COLORS, icons, SIZES } from "../constants";
 import {AuthContext} from '../context/AuthContext';
@@ -17,12 +17,13 @@ const Tab = createBottomTabNavigator();
 
 const Tabs = () => {
 
-    const {logout} = React.useContext(AuthContext);
+   /* const {logout, user, setUser} = React.useContext(AuthContext);
 
     React.useEffect(() => {
         logout();
+        setUser(null);
     }, [])
- 
+    */
     return (
         <Tab.Navigator
             tabBarOptions={{
@@ -136,16 +137,3 @@ const Tabs = () => {
 
 export default Tabs;
 
-/*
-<Text 
-    style={{
-    justifyContent: 'center',
-    color: focused ? COLORS.pink : COLORS.darkBlue,
-    fontWeight: focused ? '800' : '300',
-    fontSize: SIZES.body5,
-    paddingTop: 2,
-    }}
->
-    Home
-/Text>
-*/

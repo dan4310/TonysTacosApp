@@ -2,24 +2,14 @@ import React from 'react';
 import firebase from '../firebase';
 import 'firebase/auth';
 import 'firebase/database';
-import {Alert} from 'react-native';
 
 export const AuthContext = React.createContext();
 
-export const AuthProvider = ({children, navigation}) => {
+export const AuthProvider = ({children}) => {
     const [user, setUser] = React.useState(null);
 
-    function errorAlert(message, data) {
-        Alert.alert(
-            message,
-            data,
-            [
-              {
-                text: "OK",
-                style: "cancel"
-              }
-            ]
-        );
+    function errorAlert(message) {
+        toast.show(message, {type: 'danger'})
     }
 
     return (
@@ -31,8 +21,22 @@ export const AuthProvider = ({children, navigation}) => {
                     try {
                         await firebase.auth().signInWithEmailAndPassword(email, password);
                     } catch (e) {
-                        console.log(e);
-                        return 0;
+                        switch(e.code) {
+                            case 'auth/user-not-found':
+                                errorAlert('No user with that email!');
+                                break;
+                            case 'auth/wrong-password':
+                                errorAlert('Wrong Password!');
+                                break;
+                            case 'auth/too-many-requests':
+                                errorAlert('Too many attempts! Try later');
+                                break;
+                            case 'auth/invalid-email':
+                                errorAlert('Invalid email!');
+                                break;
+                            default:
+                                errorAlert(e.code, e.message);
+                        }
                     }
                 },
                 register: async (email, password, name, phone) => {
@@ -44,23 +48,22 @@ export const AuthProvider = ({children, navigation}) => {
                                 phone: phone
                             })
                         })
-                        await firebase.database().ref('users/'+name+":"+firebase.auth().currentUser.uid).set({
+                        await firebase.database().ref('users/'+firebase.auth().currentUser.uid).set({
                             email: email,
                             name: name,
                             phone: phone
                         })
                         setUser(firebase.auth().currentUser);
-                        console.log("Registered!");
                     } catch (e) {
                         switch (e.code) {
                             case 'auth/weak-password':
-                                errorAlert("Password must be at least 6 characters!", '');
+                                errorAlert("Password must be at least 6 characters!");
                                 break;
                             case 'auth/email-already-in-use':
-                                errorAlert("Email already in use!", email);
+                                errorAlert("Email already in use!");
                                 break;
                             default:
-                                console.log(e.code);
+                                errorAlert(e.code);
                         }
                         return 0;
                     }
@@ -70,6 +73,23 @@ export const AuthProvider = ({children, navigation}) => {
                         await firebase.auth().signOut();
                     } catch (e) {
                         console.log(e);
+                    }
+                },
+                resetPassword: async (email) => {
+                    try {
+                        await firebase.auth().sendPasswordResetEmail(email);
+                        toast.show('Email sent! Check your inbox.', {type: 'success'})
+                    } catch (e) {
+                        switch(e.code) {
+                            case 'auth/user-not-found':
+                                errorAlert("Email address not registered!");
+                                break;
+                            case 'auth/invalid-email':
+                                errorAlert("Invalid email!");
+                                break;
+                            default:
+                                errorAlert(e.code);
+                        }
                     }
                 }
             }}

@@ -13,7 +13,8 @@ import {
 } from 'react-native';
 
 
-import { COLORS, 
+import { 
+  COLORS, 
   SIZES, 
   icons, 
   images,
@@ -29,8 +30,7 @@ const Login = ({ navigation }) => {
     const [isTyping, setIsTyping] = React.useState(0);
     const [isRegistering, setRegistering] = React.useState(0);
     const [bounceIn, setBounceIn] = React.useState(0);
-
-    const {register, login, logout, user, setUser} = useContext(AuthContext);
+    const {register, login, user, setUser} = useContext(AuthContext);
 
     const [data, setData] = React.useState({
         email: '',
@@ -81,7 +81,7 @@ const Login = ({ navigation }) => {
         confirmPassword: '',
         check_textInputChange: false,
         check_nameInputChange: false,
-        check_numberInputChange: false,
+        check_phoneInputChange: false,
         secureTextEntry: true,
         confirmSecureTextEntry: true,
     });
@@ -163,17 +163,8 @@ const Login = ({ navigation }) => {
         });
     }
 
-    function errorAlert(message, data) {
-        Alert.alert(
-            message,
-            data,
-            [
-              {
-                text: "OK",
-                style: "cancel"
-              }
-            ]
-        );
+    function errorAlert(message) {
+        toast.show(message, {type: 'danger'})
     }
 
     function onRegister() {
@@ -184,13 +175,21 @@ const Login = ({ navigation }) => {
             register(reg_data.email, reg_data.password, reg_data.name, reg_data.phone)
             .then(() => {
                 if (firebase.auth().currentUser.email === reg_data.email) {
-                    navigation.goBack();
-                } else {
-                    console.log("register failed");
+                    toast.show('Registered!', {type: 'success'})
+                    //navigation.goBack();
                 }
             })
+            .catch((error) => {console.log(error)})
          } else {
-            console.log("Something went wrong!");
+            if (!reg_data.check_textInputChange) {
+                errorAlert('Invalid email!');
+            } else if (!reg_data.check_nameInputChange) {
+                errorAlert('Must enter a name!')
+            } else if (!reg_data.check_phoneInputChange) {
+                errorAlert('Invalid phone number!')
+            } else if (reg_data.password !== reg_data.confirmPassword) {
+                errorAlert('Passwords do not match!')
+            }
         }
         
     }
@@ -211,18 +210,11 @@ const Login = ({ navigation }) => {
                 justifyContent: 'center',
                 flex: 1,
               }}
-              onPress={() => navigation.goBack()}
+              onPress={() => {
+                  //navigation.goBack()
+                }}
             >
-                <Image 
-                  source={icons.close}
-                  resizeMode="contain"
-                  style={{
-                    width: 30,
-                    height: 30,
-                    tintColor: COLORS.darkBlue,
-                    marginTop: 50
-                  }}
-                />
+                
             </TouchableOpacity>
 
 
@@ -280,16 +272,16 @@ const Login = ({ navigation }) => {
     }
 
     function onLogin() {
-        login(data.email, data.password);
+        login(data.email, data.password)
+        .catch((error) => console.log(error));
         setUser(firebase.auth().currentUser);
         Keyboard.dismiss();
         setIsTyping(0);
-        navigation.goBack();
     }
 
     function renderLogIn() {
         return (
-        <View style={{...styles.container, marginTop: -(isTyping == 0 ? (isRegistering == 0 ? SIZES.height*0.66 : SIZES.height*0.42) : SIZES.height*1.12)}}>
+        <View style={{...styles.container, marginTop: -(isTyping == 0 ? (isRegistering == 0 ? SIZES.height*0.7 : SIZES.height*0.42) : SIZES.height*1.12)}}>
             
             <Animatable.View 
                 style={{...styles.foreground}}
@@ -304,7 +296,7 @@ const Login = ({ navigation }) => {
                     paddingTop: SIZES.padding*1.5,
                 }}>
                     <Text style={{ ...styles.title, paddingLeft: SIZES.padding*1.5 }}>Sign in with your account!</Text>
-                    <Text style={{ ...styles.details, paddingLeft: SIZES.padding*1.5, paddingBottom: SIZES.padding }}>Sign in with an account</Text>
+                    <Text style={{ ...styles.details, paddingLeft: SIZES.padding*1.5, paddingBottom: SIZES.padding }}>Enter your account info</Text>
                 </View>
 
 
@@ -356,7 +348,7 @@ const Login = ({ navigation }) => {
                         >
                             <Feather 
                                 name='check-circle'
-                                color={COLORS.pink}
+                                color={COLORS.secondary}
                                 size={20}
                             />
                         </Animatable.View>
@@ -467,6 +459,19 @@ const Login = ({ navigation }) => {
                     </View>
                 </View>
 
+                <View style={{paddingTop: 10}}>
+                    <TouchableOpacity style={{
+                            //padding: SIZES.padding,
+                            //backgroundColor: COLORS.secondary,
+                            alignItems: 'center',
+                            //borderRadius: SIZES.radius,
+                        }} 
+                        onPress={() => navigation.navigate("ForgotPassword")}
+                    >
+                        <Text style={{...styles.register, fontSize: SIZES.h6, fontWeight: SIZES.w4}}>Forgot password?</Text>
+                    </TouchableOpacity>
+                </View>
+
             </Animatable.View>
         </View>
         )
@@ -545,7 +550,7 @@ const Login = ({ navigation }) => {
                         >
                             <Feather 
                                 name='check-circle'
-                                color={COLORS.pink}
+                                color={COLORS.secondary}
                                 size={20}
                             />
                         </Animatable.View>
@@ -602,7 +607,7 @@ const Login = ({ navigation }) => {
                         >
                             <Feather 
                                 name='check-circle'
-                                color={COLORS.pink}
+                                color={COLORS.secondary}
                                 size={20}
                             />
                         </Animatable.View>
@@ -658,7 +663,7 @@ const Login = ({ navigation }) => {
                         >
                             <Feather 
                                 name='check-circle'
-                                color={COLORS.pink}
+                                color={COLORS.secondary}
                                 size={20}
                             />
                         </Animatable.View>
@@ -851,7 +856,7 @@ const Login = ({ navigation }) => {
         
       }
 
-
+    
     return (
       <SafeAreaView style={{
           backgroundColor: COLORS.white,

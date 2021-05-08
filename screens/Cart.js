@@ -1,5 +1,3 @@
-import { NavigationContainer } from '@react-navigation/native';
-import { CardStyleInterpolators } from '@react-navigation/stack';
 import * as Animatable from 'react-native-animatable';
 import React, {useRef, useState, useContext} from 'react';
 import {
@@ -11,12 +9,14 @@ import {
     Image,
     FlatList,
     Alert,
+    Linking,
 } from 'react-native';
 import {icons, images, COLORS, SIZES, categories, foodList, storeList } from '../constants';
 import { CartContext } from '../context/CartContext';
 import { AuthContext } from '../context/AuthContext';
 import firebase from '../firebase';
-
+import moment from 'moment';
+import qs from 'qs';
 
 const Cart = ({ navigation }) => {
     const [bounceIn, setBounceIn] = useState(0);
@@ -28,15 +28,14 @@ const Cart = ({ navigation }) => {
 
     const {user, setUser} = useContext(AuthContext);
 
-    const onAuthStateChanged = (user) => {
-      setUser(user);
-    }
+    const [finishOrder, setFinishOrder] = useState(0);
+    const [phone, setPhone] = React.useState('');
 
     React.useEffect(() => {
-      const subscriber = firebase.auth().onAuthStateChanged(onAuthStateChanged);
-    }, [])
-
-    const [finishOrder, setFinishOrder] = useState(0);
+     firebase.database().ref('users/'+user.uid+'/phone').get().then(function(snap) {
+        setPhone(snap.val());
+      });
+    })
     
     function renderHeader() {
         return (
@@ -353,9 +352,6 @@ const Cart = ({ navigation }) => {
 
     function onFinishOrder() {
       if (user) {
-        var phone = '';
-        firebase.database().ref('users/'+user.displayName+':'+user.uid+'/phone').on('value', function(snap) {
-          phone = snap.val();
           Alert.alert(
             "Confirm Order",
             "Place order for:\n"+user.displayName+"\n"+phone,
@@ -366,16 +362,40 @@ const Cart = ({ navigation }) => {
                 style: "cancel"
               },
               { text: "OK", onPress: () => {
-                setBounceIn(0);
-                setCart([]);
+                const ordID = Date.now();
+                firebase.database().ref('orders/'+ordID).set({
+                  user: user.uid,
+                  order: cart.map(item => {
+                    var temp = {
+                      name: item.food.name,
+                      price: item.total,
+                    };
+                    if (item.hasOwnProperty('mods')) {
+                      temp = {...temp, mods: item.mods};
+                    }
+                    if (item.hasOwnProperty('choice')) {
+                      temp = {...temp, choice: item.choice};
+                    }
+                    return temp;
+                  }),
+                  total: total,
+                  price: subTotal,
+                  date: moment().format('MMMM Do YYYY'),
+                  time: moment().format('h:mm:ss a'),
+                }).then(() => {
+                    toast.show('Order Placed!', {type: 'success'});
+                    setBounceIn(0);
+                    setCart([]);
+                })
+                .catch((error) => console.log(error))
+                  
+                
               } }
             ]
           );
-        })
-        
       } else {
         console.log("not logged in");
-        navigation.navigate('Login')
+        navigation.navigate('Login');
       }
     }
     
@@ -385,9 +405,7 @@ const Cart = ({ navigation }) => {
         <Animatable.View style={{
             borderTopLeftRadius: 40,
             borderTopRightRadius: 40,
-            //backgroundColor: COLORS.secondary,
             height: SIZES.height*0.8,
-            //marginTop: -SIZES.width*0.89,
           }}
           animation= {bounceIn == 1 ? 'bounceInUp' : 'bounceOutDown'}
         >
