@@ -4,6 +4,40 @@ This is an app I am building for the [Tony's Tacos](https://www.tonystaco.com/) 
 
 You can also check out my other project: [MLB database analysis site](https://daniel.courtneyco.com/ "my-website")
 
+## Video Demos
+
+---
+
+<table style="text-align:center;">
+    <tr>
+        <td>
+            <h3>Authentication</h3>
+            <video width="200" controls src="https://daniel.courtneyco.com/TonysTacos/auth.mov">
+                video not available.
+            </video>
+        </td>
+        <td>
+        <h3>Menu & Food</h3>
+            <video width="200" controls src="https://daniel.courtneyco.com/TonysTacos/food.mov">
+                video not available.
+            </video>
+        </td>
+    </tr>
+    <tr>
+        <td>
+        <h3>Account Info</h3>
+            <video width="200" controls src="https://daniel.courtneyco.com/TonysTacos/account.mov">
+                video not available.
+            </video>
+        <td>
+        <h3>Cart</h3>
+            <video width="200"controls src="https://daniel.courtneyco.com/TonysTacos/cart.mov">
+                video not available.
+            </video>
+        </td>
+    </tr>
+</table>
+
 ## Features
 
 ---
@@ -74,44 +108,6 @@ Cart data is distributed among other screens via React Context/Provider. Cart ic
     <li>tap Finish & Pay button to be prompted with alert with your user info and confirm order, on confirmation the order will be written to the Firebase database and your cart will be emptied</li>
 </ul>
 
-## Video Demos
-
----
-
-<table style="text-align:center;">
-    <tr>
-        <td>
-            <h3>Authentication</h3>
-            <video width="240" height="320" controls>
-            <source src="movie.mp4" type="video/mp4">
-                video not available.
-            </video>
-        </td>
-        <td>
-        <h3>Menu & Food</h3>
-            <video width="240" height="320" controls>
-            <source src="movie.mp4" type="video/mp4">
-                video not available.
-            </video>
-        </td>
-    </tr>
-    <tr>
-        <td>
-        <h3>Account Info</h3>
-            <video width="240" height="320" controls>
-            <source src="movie.mp4" type="video/mp4">
-                video not available.
-            </video>
-        <td>
-        <h3>Cart</h3>
-            <video width="240" height="320" controls>
-            <source src="movie.mp4" type="video/mp4">
-                video not available.
-            </video>
-        </td>
-    </tr>
-</table>
-
 ## Screenshots
 
 ---
@@ -119,18 +115,42 @@ Cart data is distributed among other screens via React Context/Provider. Cart ic
 <table style="text-align:center;">
     <tr>
         <td>
-        <img src="https://daniel.courtneyco.com/TonysTacos/homePage.png" alt="home1" width="300"/>
+        <img src="https://daniel.courtneyco.com/TonysTacos/signIn.png" alt="mexBowl" width="300"/>
         </td>
         <td>
-        <img src="https://daniel.courtneyco.com/TonysTacos/homePage2.png" alt="home2" width="300"/>
+        <img src="https://daniel.courtneyco.com/TonysTacos/register.png" alt="chickenMango" width="300"/>
         </td>
     </tr>
     <tr>
         <td>
-        <img src="https://daniel.courtneyco.com/TonysTacos/menu.png" alt="menu1" width="300"/>
+        <img src="https://daniel.courtneyco.com/TonysTacos/forgotPass.png" alt="mexBowl" width="300"/>
         </td>
         <td>
+        <img src="https://daniel.courtneyco.com/TonysTacos/homePage.png" alt="chickenMango" width="300"/>
+        </td>
+    </tr>
+    <tr>
+        <td>
+        <img src="https://daniel.courtneyco.com/TonysTacos/homePage2.png" alt="home1" width="300"/>
+        </td>
+        <td>
+        <img src="https://daniel.courtneyco.com/TonysTacos/menu.png" alt="home2" width="300"/>
+        </td>
+    </tr>
+    <tr>
+        <td>
         <img src="https://daniel.courtneyco.com/TonysTacos/menu2.png" alt="menu2" width="300"/>
+        </td>
+        <td>
+        <img src="https://daniel.courtneyco.com/TonysTacos/account.png" alt="menu2" width="300"/>
+        </td>
+    </tr>
+    <tr>
+        <td>
+        <img src="https://daniel.courtneyco.com/TonysTacos/editInfo.png" alt="mexBowl" width="300"/>
+        </td>
+        <td>
+        <img src="https://daniel.courtneyco.com/TonysTacos/chickenMango.png" alt="chickenMango" width="300"/>
         </td>
     </tr>
     <tr>
@@ -138,7 +158,7 @@ Cart data is distributed among other screens via React Context/Provider. Cart ic
         <img src="https://daniel.courtneyco.com/TonysTacos/mexBowl.png" alt="mexBowl" width="300"/>
         </td>
         <td>
-        <img src="https://daniel.courtneyco.com/TonysTacos/chickenMango.png" alt="chickenMango" width="300"/>
+        <img src="https://daniel.courtneyco.com/TonysTacos/cart.png" alt="chickenMango" width="300"/>
         </td>
     </tr>
 </table>
