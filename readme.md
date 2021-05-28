@@ -8,35 +8,17 @@ You can also check out my other project: [MLB database analysis site](https://da
 
 ---
 
-<table style="text-align:center;">
-    <tr>
-        <td>
-            <h3>Authentication</h3>
-            <video width="200" controls src="https://daniel.courtneyco.com/TonysTacos/auth.mov">
-                video not available.
-            </video>
-        </td>
-        <td>
-        <h3>Menu & Food</h3>
-            <video width="200" controls src="https://daniel.courtneyco.com/TonysTacos/food.mov">
-                video not available.
-            </video>
-        </td>
-    </tr>
-    <tr>
-        <td>
-        <h3>Account Info</h3>
-            <video width="200" controls src="https://daniel.courtneyco.com/TonysTacos/account.mov">
-                video not available.
-            </video>
-        <td>
-        <h3>Cart</h3>
-            <video width="200"controls src="https://daniel.courtneyco.com/TonysTacos/cart.mov">
-                video not available.
-            </video>
-        </td>
-    </tr>
-</table>
+https://user-images.githubusercontent.com/37547688/120033017-06e5fe80-bfc9-11eb-99a4-297d3500cfb6.mov
+
+
+https://user-images.githubusercontent.com/37547688/120033026-0baab280-bfc9-11eb-88f9-d3a1eac31629.mov
+
+
+https://user-images.githubusercontent.com/37547688/120033100-23823680-bfc9-11eb-9526-8b33999520a5.mov
+
+
+https://user-images.githubusercontent.com/37547688/120033124-28df8100-bfc9-11eb-89f5-46e8f165f1cf.mov
+
 
 ## Features
 
@@ -56,6 +38,12 @@ Data is authenticated via Firebase and registered accounts are written to Fireba
 ### Home Screen
 
 Data is collected realtime from Firebase database.
+
+https://user-images.githubusercontent.com/37547688/120032988-fe8dc380-bfc8-11eb-8e13-00fa3903889d.mov
+
+
+https://user-images.githubusercontent.com/37547688/120033003-02214a80-bfc9-11eb-9ea8-ad538701ffae.mov
+
 
 <ul>
     <li>carousel of announcements</li>
