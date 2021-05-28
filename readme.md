@@ -39,12 +39,6 @@ Data is authenticated via Firebase and registered accounts are written to Fireba
 
 Data is collected realtime from Firebase database.
 
-https://user-images.githubusercontent.com/37547688/120032988-fe8dc380-bfc8-11eb-8e13-00fa3903889d.mov
-
-
-https://user-images.githubusercontent.com/37547688/120033003-02214a80-bfc9-11eb-9ea8-ad538701ffae.mov
-
-
 <ul>
     <li>carousel of announcements</li>
     <li>info reel of limited time offereing</li>
